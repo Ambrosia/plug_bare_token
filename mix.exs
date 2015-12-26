@@ -27,6 +27,6 @@ defmodule PlugBareToken.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:plug, "~> 1.0"}]
   end
 end
