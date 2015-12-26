@@ -15,7 +15,7 @@ defmodule PlugBareToken.EnsureProcessSuccessful do
   def init(_opts), do: []
 
   @doc false
-  def call(conn = %{assigns: %{token_process_successful?: true}}, _opts) do
+  def call(conn = %{private: %{token_process_successful?: true}}, _opts) do
     conn
   end
 

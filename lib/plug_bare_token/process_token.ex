@@ -6,10 +6,6 @@ defmodule PlugBareToken.ProcessToken do
   `{:ok, conn}` or `{:error, :something}`. In your module, you can do things
   like get a user from the database.
 
-  This plug will assign `:token_process_successful?` to true or false
-  in the conn, depending on whether your module returned {:ok, conn} or
-  {:error, :something}.
-
   ## Example
       plug PlugBareToken.ProcessToken, using: YourModule
   or
@@ -32,9 +28,9 @@ defmodule PlugBareToken.ProcessToken do
   def call(conn, %{using: {module, function}}) do
     case apply(module, function, [conn]) do
       {:ok, conn} ->
-        Plug.Conn.assign(conn, :token_process_successful?, true)
+        Plug.Conn.put_private(conn, :token_process_successful?, true)
       _ ->
-        Plug.Conn.assign(conn, :token_process_successful?, false)
+        Plug.Conn.put_private(conn, :token_process_successful?, false)
     end
   end
 end

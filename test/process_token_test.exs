@@ -19,7 +19,7 @@ defmodule PlugBareToken.ProcessTokenTest do
     conn = ProcessToken.call(conn, opts)
 
     assert conn.assigns[:token] == conn.assigns[:processed_token]
-    assert conn.assigns[:token_process_successful?]
+    assert conn.private[:token_process_successful?]
   end
 
   test "processes the token using the given module and function", %{conn: conn} do
@@ -27,7 +27,7 @@ defmodule PlugBareToken.ProcessTokenTest do
     conn = ProcessToken.call(conn, opts)
 
     assert conn.assigns[:token] == conn.assigns[:processed_token]
-    assert conn.assigns[:token_process_successful?]
+    assert conn.private[:token_process_successful?]
   end
 
   test "token is not processed if not found" do
@@ -37,6 +37,6 @@ defmodule PlugBareToken.ProcessTokenTest do
     conn = ProcessToken.call(conn, opts)
 
     refute conn.assigns[:processed_token]
-    refute conn.assigns[:token_process_successful?]
+    refute conn.private[:token_process_successful?]
   end
 end
