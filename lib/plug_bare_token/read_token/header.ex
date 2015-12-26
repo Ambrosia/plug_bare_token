@@ -1,11 +1,12 @@
 defmodule PlugBareToken.ReadToken.Header do
   @default_into :token
+  @default_assign :token
   @default_header "authorization"
   @default_prefix :none
 
   def init(options) do
     %{
-      into: Keyword.get(options, :into, @default_into),
+      assign: Keyword.get(options, :assign, @default_assign),
       header: Keyword.get(options, :header, @default_header),
       prefix: Keyword.get(options, :prefix, @default_prefix)
     }
@@ -39,7 +40,7 @@ defmodule PlugBareToken.ReadToken.Header do
   end
   def extract_token(_, _), do: :nil
 
-  def store_token(conn, token, %{into: into}) do
-    Plug.Conn.assign(conn, into, token)
+  def store_token(conn, token, %{assign: assign}) do
+    Plug.Conn.assign(conn, assign, token)
   end
 end

@@ -3,7 +3,7 @@ defmodule PlugBareToken.ReadToken.HeaderTest do
   use Plug.Test
   alias PlugBareToken.ReadToken.Header
 
-  @default_into :token
+  @default_assign :token
   @default_header "authorization"
   @default_prefix :none
 
@@ -16,7 +16,7 @@ defmodule PlugBareToken.ReadToken.HeaderTest do
     opts = Header.init([])
     conn = Header.call(conn, opts)
 
-    assert conn.assigns[@default_into] == token
+    assert conn.assigns[@default_assign] == token
   end
 
   test "doesn't find a token when none is given" do
@@ -25,20 +25,20 @@ defmodule PlugBareToken.ReadToken.HeaderTest do
     opts = Header.init([])
     conn = Header.call(conn, opts)
 
-    refute conn.assigns[@default_into]
+    refute conn.assigns[@default_assign]
   end
 
-  test "finds a token using custom :into option" do
+  test "finds a token using custom :assign option" do
     token = "another token"
-    into = :elsewhere
+    assign = :elsewhere
 
     conn = conn(:get, "/")
     |> Plug.Conn.put_req_header(@default_header, token)
 
-    opts = Header.init([into: into])
+    opts = Header.init([assign: assign])
     conn = Header.call(conn, opts)
 
-    assert conn.assigns[into] == token
+    assert conn.assigns[assign] == token
   end
 
   test "finds a token using custom :header option" do
@@ -51,7 +51,7 @@ defmodule PlugBareToken.ReadToken.HeaderTest do
     opts = Header.init([header: header])
     conn = Header.call(conn, opts)
 
-    assert conn.assigns[@default_into] == token
+    assert conn.assigns[@default_assign] == token
   end
 
   test "finds a token using custom prefix option" do
@@ -64,6 +64,6 @@ defmodule PlugBareToken.ReadToken.HeaderTest do
     opts = Header.init([prefix: prefix])
     conn = Header.call(conn, opts)
 
-    assert conn.assigns[@default_into] == token
+    assert conn.assigns[@default_assign] == token
   end
 end
